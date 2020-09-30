@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"log"
 	"fmt"
+	"os"
 	"github.com/HendricksK/sacosbego/article"
 
 	"github.com/labstack/echo/v4"
@@ -17,7 +18,6 @@ func getArticles(c echo.Context) error {
 
 func getArticle(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
-
 	if err != nil {
 	    log.Println(err)
 	}
@@ -36,5 +36,19 @@ func main() {
 	e.GET("/articles", getArticles)
 	e.GET("/article/:id", getArticle)
 
-	e.Logger.Fatal(e.Start(":1323"))
+	port, err := getPort()
+	if err != nil {
+	    log.Println(err)
+	}
+	
+	e.Logger.Fatal(e.Start(port))
+}
+
+func getPort() (string, error) {
+  // the PORT is supplied by Heroku
+  port := os.Getenv("PORT")
+  if port == "" {
+    return "", fmt.Errorf("$PORT not set")
+  }
+  return ":" + port, nil
 }
