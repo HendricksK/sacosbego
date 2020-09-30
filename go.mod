@@ -1,6 +1,6 @@
-module github.com/HendricksK/sacos-be-go
+module github.com/HendricksK/sacosbego
 
-go 1.13
+go 1.15
 
 require (
 	github.com/labstack/echo/v4 v4.1.17

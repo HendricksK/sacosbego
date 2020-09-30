@@ -2,6 +2,10 @@ package main
 
 import (
 	"net/http"
+	"strconv"
+	"log"
+	"fmt"
+	"github.com/HendricksK/sacosbego/article"
 
 	"github.com/labstack/echo/v4"
 	_ "github.com/lib/pq"
@@ -12,8 +16,15 @@ func getArticles(c echo.Context) error {
 }
 
 func getArticle(c echo.Context) error {
-	id := c.Param("id")
-	return c.String(http.StatusOK, "thats an opportunity "+id)
+	id, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil {
+	    log.Println(err)
+	}
+	
+	data := article.GetArticle(id)
+	fmt.Print(data)
+	return c.String(http.StatusOK, data.Article_data)
 }
 
 func main() {
