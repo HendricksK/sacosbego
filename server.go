@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	_ "github.com/lib/pq"
 )
 
 func getArticles(c echo.Context) error {
