@@ -48,7 +48,7 @@ func GetArticles() []Article {
 	for rows.Next() {
 		
 		var article Article
-		err = rows.Scan(&article.Id, &article.Name, &article.Article_data, &article.Url, &article.Datetime)
+		err = rows.Scan(&article.Id, &article.Name, &article.Datetime)
 		if err != nil {
 		    log.Println(err)
 		}
