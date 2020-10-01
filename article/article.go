@@ -39,7 +39,7 @@ func GetArticle(article_id int) Article {
 func GetArticles() []Article {
 
 	var articles []Article
-	rows, err := db.Query("SELECT * FROM article")
+	rows, err := db.Query("SELECT id, name, datetime FROM article")
 	if err != nil {
 	    log.Println(err)
 	}
