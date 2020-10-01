@@ -12,7 +12,8 @@ import (
 )
 
 func getArticles(c echo.Context) error {
-	return c.String(http.StatusOK, "thats an opportunity")
+	data := article.GetArticles()
+	return c.JSON(http.StatusOK, data)
 }
 
 func getArticle(c echo.Context) error {
@@ -22,7 +23,7 @@ func getArticle(c echo.Context) error {
 	}
 	
 	data := article.GetArticle(id)
-	fmt.Print(data)
+
 	return c.String(http.StatusOK, data.Article_data)
 }
 
