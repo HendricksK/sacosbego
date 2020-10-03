@@ -24,7 +24,7 @@ func getArticle(c echo.Context) error {
 	
 	data := article.GetArticle(id)
 
-	return c.String(http.StatusOK, data.Article_data)
+	return c.JSON(http.StatusOK, data)
 }
 
 func main() {
