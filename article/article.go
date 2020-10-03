@@ -14,6 +14,7 @@ type Article struct {
 	Article_data 	string 
 	Url 			string 
 	Datetime 		string
+	Author			string
 }
 
 var connStr = os.Getenv("DATABASE_URL")
@@ -22,7 +23,7 @@ var db, err = sql.Open("postgres", connStr)
 func GetArticle(article_id int) Article {
 
 	var article Article
-	err := db.QueryRow("SELECT * FROM article WHERE id = $1;", article_id).Scan(&article.Id, &article.Name, &article.Article_data, &article.Url, &article.Datetime)
+	err := db.QueryRow("SELECT * FROM article WHERE id = $1;", article_id).Scan(&article.Id, &article.Name, &article.Article_data, &article.Url, &article.Datetime, &article.Author)
 	if err != nil {
 	    log.Println(err)
 	}
@@ -32,13 +33,14 @@ func GetArticle(article_id int) Article {
 		Name: article.Name,
 		Article_data: article.Article_data,
 		Url: article.Url,
-		Datetime: article.Datetime }
+		Datetime: article.Datetime,
+		Author: article.Author }
 }
 
 func GetArticles() []Article {
 
 	var articles []Article
-	rows, err := db.Query("SELECT id, name, datetime FROM article")
+	rows, err := db.Query("SELECT id, name, datetime, author FROM article")
 	if err != nil {
 	    log.Println(err)
 	}
@@ -47,7 +49,7 @@ func GetArticles() []Article {
 	for rows.Next() {
 		
 		var article Article
-		err = rows.Scan(&article.Id, &article.Name, &article.Datetime)
+		err = rows.Scan(&article.Id, &article.Name, &article.Datetime, &article.Author)
 		if err != nil {
 		    log.Println(err)
 		}
