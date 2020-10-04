@@ -5,7 +5,6 @@ import (
 	"os"
 	"database/sql"
 	"fmt"
-	"github.com/HendricksK/sacosbego/post"
 
 	_ "github.com/lib/pq"
 )

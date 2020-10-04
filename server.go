@@ -8,6 +8,7 @@ import (
 	"os"
 	"github.com/HendricksK/sacosbego/article"
 	"github.com/HendricksK/sacosbego/page"
+	"github.com/HendricksK/sacosbego/post"
 
 	"github.com/labstack/echo/v4"
 )
