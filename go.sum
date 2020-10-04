@@ -1,3 +1,5 @@
+github.com/HendricksK/sacosbego v0.0.0-20201003224953-86c7baf831ea h1:lPZ6YCpsQAN5WXYs9DTGD3E86YVDHJpHuGfnci3hNz4=
+github.com/HendricksK/sacosbego v0.0.0-20201003224953-86c7baf831ea/go.mod h1:e8yr4HyiiA8upmWaGdYynJI/kjcnAbwuR5gfhn49PBE=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

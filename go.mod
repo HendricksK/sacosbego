@@ -1,11 +1,9 @@
-module github.com/HendricksK/sacosbego
+module github.com/sacosbego
 
 go 1.15
 
 require (
-	github.com/howeyc/fsnotify v0.9.0 // indirect
+	github.com/HendricksK/sacosbego v0.0.0-20201003224953-86c7baf831ea
 	github.com/labstack/echo/v4 v4.1.17
 	github.com/lib/pq v1.8.0
-	github.com/pilu/config v0.0.0-20131214182432-3eb99e6c0b9a // indirect
-	github.com/pilu/fresh v0.0.0-20190826141211-0fa698148017 // indirect
 )
