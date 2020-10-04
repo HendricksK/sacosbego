@@ -18,7 +18,7 @@ type Post struct {
 var connStr = os.Getenv("DATABASE_URL")
 var db, err = sql.Open("postgres", connStr)
 
-func getPosts(post_id int) []Post {
+func GetPosts(post_id int) []Post {
 	var posts []Post
 
 	rows, err := db.Query("SELECT id, page_id, sectoin, page_data FROM posts WHERE page_id = $1;", post_id)

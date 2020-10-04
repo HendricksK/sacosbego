@@ -8,7 +8,6 @@ import (
 	"os"
 	"github.com/HendricksK/sacosbego/article"
 	"github.com/HendricksK/sacosbego/page"
-	"github.com/HendricksK/sacosbego/post"
 
 	"github.com/labstack/echo/v4"
 )
@@ -35,7 +34,7 @@ func getPage(c echo.Context) error {
 	    log.Println(err)
 	}
 	
-	data := page.getPage(id)
+	data := page.GetPage(id)
 
 	return c.JSON(http.StatusOK, data)	
 }
