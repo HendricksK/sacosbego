@@ -28,6 +28,11 @@ func getArticle(c echo.Context) error {
 	return c.JSON(http.StatusOK, data)
 }
 
+func getArticleIds(c echo.Context) error {
+	data := article.GetArticlesIds()
+	return c.JSON(http.StatusOK, data)
+}
+
 func getPage(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -53,6 +58,7 @@ func main() {
 	}) 
 	e.GET("/articles", getArticles)
 	e.GET("/article/:id", getArticle)
+	e.GET("/articleids", getArticleIds)
 	e.GET("/page/:id", getPage)
 	// Here ends API calls
 

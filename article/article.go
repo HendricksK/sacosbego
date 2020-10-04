@@ -17,6 +17,10 @@ type Article struct {
 	Author			string
 }
 
+type ArticleId struct {
+	Id				int
+}
+
 var connStr = os.Getenv("DATABASE_URL")
 var db, err = sql.Open("postgres", connStr)
 
@@ -60,3 +64,26 @@ func GetArticles() []Article {
 	return articles
 	
 }
+
+func GetArticlesIds() []ArticleId{
+	var articles []ArticleId
+	rows, err := db.Query("SELECT id FROM article")
+	if err != nil {
+	    log.Println(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		
+		var article ArticleId
+		err = rows.Scan(&article.Id)
+		if err != nil {
+		    log.Println(err)
+		}
+
+		articles = append(articles, article)	
+	}
+
+	return articles
+}
+
