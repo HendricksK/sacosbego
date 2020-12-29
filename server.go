@@ -8,6 +8,7 @@ import (
 	"os"
 	"github.com/HendricksK/sacosbego/article"
 	"github.com/HendricksK/sacosbego/page"
+	"github.com/HendricksK/sacosbego/post"
 
 	"github.com/labstack/echo/v4"
 )
@@ -44,12 +45,24 @@ func getPage(c echo.Context) error {
 	return c.JSON(http.StatusOK, data)	
 }
 
+func getPosts(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+	    log.Println(err)
+	}
+	
+	data := post.GetPosts(id)
+
+	return c.JSON(http.StatusOK, data)	
+}
+
 /**
 * Main function call init echo server
 * Create our API calls as well
 * Setup our PORT	
 */
 func main() {
+
 	// Echo init
 	e := echo.New()
 	// Here lies API calls
@@ -60,6 +73,7 @@ func main() {
 	e.GET("/article/:id", getArticle)
 	e.GET("/articleids", getArticleIds)
 	e.GET("/page/:id", getPage)
+	e.GET("/posts/:id", getPosts)
 	// Here ends API calls
 
 	// Port setup for echo webserver
@@ -75,7 +89,7 @@ func getPort() (string, error) {
   // the PORT is supplied by Heroku
   port := os.Getenv("PORT")
   if port == "" {
-    return "", fmt.Errorf("$PORT not set")
+    return "", fmt.Errorf("PORT not set")
   }
   return ":" + port, nil
 }

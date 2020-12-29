@@ -43,6 +43,8 @@ func GetArticle(article_id int) Article {
 
 func GetArticles() []Article {
 
+	log.Println(connStr)
+
 	var articles []Article
 	rows, err := db.Query("SELECT id, name, datetime, author FROM article")
 	if err != nil {
