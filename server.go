@@ -13,12 +13,16 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func getArticles(c echo.Context) error {
+/**
+ * Article API calls
+ */
+
+func GetArticles(c echo.Context) error {
 	data := article.GetArticles()
 	return c.JSON(http.StatusOK, data)
 }
 
-func getArticle(c echo.Context) error {
+func GetArticle(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 	    log.Println(err)
@@ -29,12 +33,16 @@ func getArticle(c echo.Context) error {
 	return c.JSON(http.StatusOK, data)
 }
 
-func getArticleIds(c echo.Context) error {
+func GetArticleIds(c echo.Context) error {
 	data := article.GetArticlesIds()
 	return c.JSON(http.StatusOK, data)
 }
 
-func getPage(c echo.Context) error {
+/**
+ * Page API calls
+ */
+
+func GetPage(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 	    log.Println(err)
@@ -45,7 +53,11 @@ func getPage(c echo.Context) error {
 	return c.JSON(http.StatusOK, data)	
 }
 
-func getPosts(c echo.Context) error {
+/**
+ * Post API calls
+ */
+
+func GetPosts(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 	    log.Println(err)
@@ -54,6 +66,18 @@ func getPosts(c echo.Context) error {
 	data := post.GetPosts(id)
 
 	return c.JSON(http.StatusOK, data)	
+}
+
+func GetPostSection(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	section := c.Param("section")
+	if err != nil {
+	    log.Println(err)
+	}
+	
+	data := post.GetPostSection(id, section)
+
+	return c.JSON(http.StatusOK, data)
 }
 
 /**
@@ -69,15 +93,16 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "...Sharon, I'm good at stuff\nAnd you're into stuff (wooh)\nLet's make products - Vulfpeck wait for the moment,\nhttps://genius.com/Vulfpeck-wait-for-the-moment-lyrics")
 	}) 
-	e.GET("/articles", getArticles)
-	e.GET("/article/:id", getArticle)
-	e.GET("/articleids", getArticleIds)
-	e.GET("/page/:id", getPage)
-	e.GET("/posts/:id", getPosts)
+	e.GET("/articles", GetArticles)
+	e.GET("/article/:id", GetArticle)
+	e.GET("/articleids", GetArticleIds)
+	e.GET("/page/:id", GetPage)
+	e.GET("/posts/:id", GetPosts)
+	e.GET("/posts/:id/:section", GetPostSection)
 	// Here ends API calls
 
 	// Port setup for echo webserver
-	port, err := getPort()
+	port, err := GetPort()
 	if err != nil {
 	    log.Println(err)
 	}
@@ -85,7 +110,7 @@ func main() {
 	e.Logger.Fatal(e.Start(port))
 }
 
-func getPort() (string, error) {
+func GetPort() (string, error) {
   // the PORT is supplied by Heroku
   port := os.Getenv("PORT")
   if port == "" {

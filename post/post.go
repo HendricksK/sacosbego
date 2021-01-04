@@ -45,3 +45,16 @@ func GetPosts(post_id int) []Post {
 
 	return posts
 }
+
+func GetPostSection(page_id int, section string) Post {
+	var post Post
+
+	err := db.QueryRow("SELECT id, page_id, section, page_data FROM posts WHERE page_id = $1 AND section = $2;", page_id, section).Scan(&post.Id, &post.Page_id, &post.Section, &post.Page_data)
+	if err != nil {
+	    log.Println(err)
+	}
+
+	post.Page_data_string = string(post.Page_data)
+
+	return post
+}
