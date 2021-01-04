@@ -3,7 +3,6 @@ package post
 import (
 	"log"
 	"os"
-	"fmt"
 	"database/sql"
 	// "encoding/json"
 
