@@ -24,3 +24,10 @@ So, you can still follow the echo README example code:
 # URLS
 # /articles
 # /article/12
+
+With go 1.15 and later, just clone and run.
+
+Set PORT to 6660 macos export PORT="6660"
+Set DATABASE_URL macos export DATABASE_URL="postgressurl"
+go run server.go 
+

@@ -66,6 +66,7 @@ func GetArticles() []Article {
 }
 
 func GetArticlesIds() []ArticleId{
+	
 	var articles []ArticleId
 	rows, err := db.Query("SELECT id FROM article")
 	if err != nil {
