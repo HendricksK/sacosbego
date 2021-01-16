@@ -63,12 +63,12 @@ func GetArticleIds(c echo.Context) error {
 	return c.JSON(http.StatusOK, data)
 }
 
-/**
- * Track API calls
- */
+// /**
+//  * Track API calls
+//  */
 
 func GetTracks(c echo.Context) error {
-	data := track.GetArticles()
+	data := track.GetTracks()
 	return c.JSON(http.StatusOK, data)
 }
 
@@ -78,13 +78,13 @@ func GetTrack(c echo.Context) error {
 	    log.Println(err)
 	}
 	
-	data := track.GetArticle(id)
+	data := track.GetTrack(id)
 
 	return c.JSON(http.StatusOK, data)
 }
 
 func GetTrackIds(c echo.Context) error {
-	data := track.GetArticlesIds()
+	data := track.GetTrackIds()
 	return c.JSON(http.StatusOK, data)
 }
 
@@ -167,20 +167,19 @@ func main() {
 	// Echo init
 	e := echo.New()
 	// Here lies API calls
-	// e.GET("/", func(c echo.Context) error {
-	// 	return c.String(http.StatusOK, 
-	// 		"/articles\n" +
-	// 		"/articles:id\n" +
-	// 		"/articleids\n" +
-	// 		"/page/:id\n" +
-	// 		"/posts/:id\n" +
-	// 		"/posts/:id/:section")
-	// }) 
-
 	e.GET("/", GetApiCalls)
 	e.GET("/articles", GetArticles)
 	e.GET("/article/:id", GetArticle)
 	e.GET("/articleids", GetArticleIds)
+
+	e.GET("/tracks", GetTracks)
+	e.GET("/track/:id", GetTrack)
+	e.GET("/trackids", GetTrackIds)
+
+	e.GET("/riders", GetRiders)
+	e.GET("/rider/:id", GetRider)
+	e.GET("/riderids", GetRiderIds)
+
 	e.GET("/page/:id", GetPage)
 	e.GET("/posts/:id", GetPosts)
 	e.GET("/posts/:id/:section", GetPostSection)

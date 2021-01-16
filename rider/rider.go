@@ -11,10 +11,10 @@ import (
 type Rider struct {
 	Id				int
 	Name 			string 
-	rider_data 	string 
+	Rider_data 		string 
 	Url 			string 
 	Datetime 		string
-	Author			string
+	Updatetime 		string
 }
 
 type RiderId struct {
@@ -24,10 +24,10 @@ type RiderId struct {
 var connStr = os.Getenv("DATABASE_URL")
 var db, err = sql.Open("postgres", connStr)
 
-func Getrider(rider_id int) Rider {
+func GetRider(rider_id int) Rider {
 
 	var rider Rider
-	err := db.QueryRow("SELECT * FROM rider WHERE id = $1;", rider_id).Scan(&rider.Id, &rider.Name, &rider.rider_data, &rider.Url, &rider.Datetime, &rider.Author)
+	err := db.QueryRow("SELECT * FROM rider WHERE id = $1;", rider_id).Scan(&rider.Id, &rider.Name, &rider.Rider_data, &rider.Url, &rider.Datetime, &rider.Updatetime)
 	if err != nil {
 	    log.Println(err)
 	}
@@ -35,16 +35,17 @@ func Getrider(rider_id int) Rider {
 	return Rider {
 		Id: rider.Id,
 		Name: rider.Name,
-		rider_data: rider.rider_data,
+		Rider_data: rider.Rider_data,
 		Url: rider.Url,
 		Datetime: rider.Datetime,
-		Author: rider.Author }
+		Updatetime: rider.Updatetime,
+	}
 }
 
-func Getriders() []Rider {
+func GetRiders() []Rider {
 
 	var riders []Rider
-	rows, err := db.Query("SELECT id, name, datetime, author FROM rider")
+	rows, err := db.Query("SELECT id, name, Rider_data FROM rider")
 	if err != nil {
 	    log.Println(err)
 	}
@@ -56,7 +57,7 @@ func Getriders() []Rider {
 	for rows.Next() {
 		
 		var rider Rider
-		err = rows.Scan(&rider.Id, &rider.Name, &rider.Datetime, &rider.Author)
+		err = rows.Scan(&rider.Id, &rider.Name, &rider.Rider_data)
 		if err != nil {
 		    log.Println(err)
 		}
@@ -68,7 +69,7 @@ func Getriders() []Rider {
 	
 }
 
-func GetridersIds() []RiderId{
+func GetRiderIds() []RiderId{
 	
 	var riders []RiderId
 	rows, err := db.Query("SELECT id FROM rider")
