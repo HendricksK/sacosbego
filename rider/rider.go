@@ -15,10 +15,16 @@ type Rider struct {
 	Url 			string 
 	Datetime 		string
 	Updatetime 		string
+	Images 			[]Image
 }
 
 type RiderId struct {
 	Id				int
+}
+
+
+type Image struct {
+	Url 			string
 }
 
 var connStr = os.Getenv("DATABASE_URL")
@@ -32,6 +38,26 @@ func GetRider(rider_id int) Rider {
 	    log.Println(err)
 	}
 
+	var images []Image
+
+	rows, err := db.Query("SELECT url FROM images WHERE info = $1 AND type = $2", rider_id, "rider")
+	if err != nil {
+	    log.Println(err)
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+
+		var image Image
+		err = rows.Scan(&image.Url)
+		if err != nil {
+		    log.Println(err)
+		}
+
+		images = append(images, image)	
+	}
+
 	return Rider {
 		Id: rider.Id,
 		Name: rider.Name,
@@ -39,6 +65,7 @@ func GetRider(rider_id int) Rider {
 		Url: rider.Url,
 		Datetime: rider.Datetime,
 		Updatetime: rider.Updatetime,
+		Images: images,
 	}
 }
 
