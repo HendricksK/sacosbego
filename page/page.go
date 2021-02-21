@@ -10,10 +10,10 @@ import (
 )
 
 type Page struct {
-	Id 			int
-	Page_data 	string
-	Datetime    string
-	Post_data	[]post.Post
+	Id 			int 		`json:"id"`
+	Page_data 	string 		`json:"page_data"`
+	Datetime    string 		`json:"datatime"`
+	Post_data	[]post.Post `json:"post_data"`
 }
 
 var connStr = os.Getenv("DATABASE_URL")

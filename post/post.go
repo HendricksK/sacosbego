@@ -4,17 +4,16 @@ import (
 	"log"
 	"os"
 	"database/sql"
-	// "encoding/json"
 
 	_ "github.com/lib/pq"
 )
 
 type Post struct {
-	Id 			int
-	Page_id 	int
-	Section 	string
-	Page_data 	[]uint8
-	Page_data_string string
+	Id 			int 		`json:"id"`
+	Page_id 	int 		`json:"page_id"`
+	Section 	string 		`json:"section"`
+	Page_data 	[]uint8 	`json:"page_data"`
+	Page_data_string string `json:"page_data_string"`
 }
 
 var connStr = os.Getenv("DATABASE_URL")
