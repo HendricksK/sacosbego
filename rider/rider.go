@@ -18,12 +18,12 @@ type Rider struct {
 }
 
 type RiderId struct {
-	Id				int
+	Id				int 	`json:"id"`
 }
 
 
 type Image struct {
-	Url 			string
+	Url 			string 	`json:"url"`
 }
 
 var connStr = os.Getenv("DATABASE_URL")
