@@ -9,16 +9,16 @@ import (
 )
 
 type Article struct {
-	Id				int
-	Name 			string 
-	Article_data 	string 
-	Url 			string 
-	Datetime 		string
-	Author			string
+	Id				int 	`json:"id"`
+	Name 			string 	`json:"name"` 
+	Article_data 	string 	`json:"article_data"`
+	Url 			string 	`json:"url"`
+	Datetime 		string 	`json:"datetime"`
+	Author			string 	`json:"author"`
 }
 
 type ArticleId struct {
-	Id				int
+	Id				int 	`json:"id"`
 }
 
 var connStr = os.Getenv("DATABASE_URL")

@@ -9,16 +9,16 @@ import (
 )
 
 type Track struct {
-	Id				int
-	Name 			string 
-	Track_data 	string 
-	Url 			string 
-	Datetime 		string
-	Updatetime		string
+	Id				int 	`json:"id"`
+	Name 			string 	`json:"name"` 
+	Track_data 		string 	`json:"track_data"`
+	Url 			string 	`json:"url"`
+	Datetime 		string 	`json:"datetime"`
+	Updatetime		string 	`json:"updatetime"`
 }
 
 type TrackId struct {
-	Id				int
+	Id				int 	`json:"id"`
 }
 
 var connStr = os.Getenv("DATABASE_URL")
