@@ -4,18 +4,17 @@ import (
 	"log"
 	"os"
 	"database/sql"
-
 	_ "github.com/lib/pq"
 )
 
 type Rider struct {
-	Id				int
-	Name 			string 
-	Rider_data 		string 
-	Url 			string 
-	Datetime 		string
-	Updatetime 		string
-	Images 			[]Image
+	Id				int    	`json:"id"`
+	Name 			string 	`json:"name"` 
+	Rider_data 		string 	`json:"rider_data"`
+	Url 			string 	`json:"url"`
+	Datetime 		string 	`json:"datetime"`
+	Updatetime 		string 	`json:"updatetime"`
+	Images 			[]Image `json:"images"`
 }
 
 type RiderId struct {
