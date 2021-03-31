@@ -15,6 +15,7 @@ import (
 	"github.com/HendricksK/sacosbego/rider"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 /**
@@ -166,6 +167,19 @@ func main() {
 
 	// Echo init
 	e := echo.New()
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+	// https://echo.labstack.com/cookbook/cors/#server-using-a-custom-function-to-allow-origins
+	// CORS default
+	// Allows requests from any origin wth GET, HEAD, PUT, POST or DELETE method.
+	// e.Use(middleware.CORS())
+
+	// CORS restricted
+	// wth GET, PUT, POST or DELETE method.
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"127.0.0.1", "https://hendricksk.github.io","https://cycling.sacoshistory.org/"},
+		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
+	}))
 	// Here lies API calls
 	e.GET("/", GetApiCalls)
 	e.GET("/articles", GetArticles)
