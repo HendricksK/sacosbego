@@ -177,8 +177,8 @@ func main() {
 	// CORS restricted
 	// wth GET, PUT, POST or DELETE method.
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"127.0.0.1", "https://hendricksk.github.io","https://cycling.sacoshistory.org/"},
-		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
+		AllowOrigins: []string{"http://127.0.0.1:8080", "https://hendricksk.github.io","https://cycling.sacoshistory.org"},
+		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodOptions},
 	}))
 	// Here lies API calls
 	e.GET("/", GetApiCalls)
