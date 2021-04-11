@@ -31,3 +31,9 @@ Set PORT to 6660 macos export PORT="6660"
 Set DATABASE_URL macos export DATABASE_URL="postgressurl"
 go run server.go 
 
+Automated code building, run "fresh" after installing fresh 
+any code updates to go will automatically rebuild
+
+# https://github.com/gravityblast/fresh
+# go get github.com/pilu/fresh
+# fresh
