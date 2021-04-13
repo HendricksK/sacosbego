@@ -13,6 +13,7 @@ import (
 	"github.com/HendricksK/sacosbego/post"
 	"github.com/HendricksK/sacosbego/track"
 	"github.com/HendricksK/sacosbego/rider"
+	"github.com/HendricksK/sacosbego/auth"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -158,6 +159,14 @@ func GetPostSection(c echo.Context) error {
 	return c.JSON(http.StatusOK, data)
 }
 
+func GetSacosUploadToken(c echo.Context) error {
+	name := c.Param("name")
+
+	data := auth.GetSacosUploadToken(name)
+
+	return c.JSON(http.StatusOK, data)
+}
+
 /**
 * Main function call init echo server
 * Create our API calls as well
@@ -177,7 +186,7 @@ func main() {
 	// CORS restricted
 	// wth GET, PUT, POST or DELETE method.
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://127.0.0.1:8080", "https://hendricksk.github.io","https://cycling.sacoshistory.org"},
+		AllowOrigins: []string{"http://127.0.0.1:8080", "https://hendricksk.github.io","https://cycling.sacoshistory.org","https://hendricksk.github.io/sacos-dataform/"},
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodOptions},
 	}))
 	// Here lies API calls
@@ -197,6 +206,8 @@ func main() {
 	e.GET("/page/:id", GetPage)
 	e.GET("/posts/:id", GetPosts)
 	e.GET("/posts/:id/:section", GetPostSection)
+
+	e.GET("/auth/:name", GetSacosUploadToken)
 	// Here ends API calls
 
 	// Port setup for echo webserver
