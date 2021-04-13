@@ -185,6 +185,9 @@ func main() {
 
 	// CORS restricted
 	// wth GET, PUT, POST or DELETE method.
+	// 
+	// TODO: work on auth using https://echo.labstack.com/middleware/key-auth/ 
+	// https://webdevstation.com/posts/user-authentication-with-go-using-jwt-token/
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"http://127.0.0.1:8080", "https://hendricksk.github.io","https://cycling.sacoshistory.org","https://hendricksk.github.io/sacos-dataform/"},
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodOptions},
