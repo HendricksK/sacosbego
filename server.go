@@ -188,10 +188,24 @@ func main() {
 	// 
 	// TODO: work on auth using https://echo.labstack.com/middleware/key-auth/ 
 	// https://webdevstation.com/posts/user-authentication-with-go-using-jwt-token/
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://127.0.0.1:8080", "https://hendricksk.github.io","https://cycling.sacoshistory.org","https://hendricksk.github.io/sacos-dataform/"},
-		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodOptions},
-	}))
+
+	var environment = os.Getenv("ENVIRONMENT")
+
+	log.Println(environment)
+
+	if environment == "local" {
+		e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+			AllowOrigins: []string{"http://127.0.0.1:8080", "http://localhost:8080"},
+			AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodOptions},
+		}))
+	} else {
+		e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+			AllowOrigins: []string{"https://hendricksk.github.io","https://cycling.sacoshistory.org","https://hendricksk.github.io/sacos-dataform"},
+			AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodOptions},
+		}))
+	}
+
+	
 	// Here lies API calls
 	e.GET("/", GetApiCalls)
 	e.GET("/articles", GetArticles)
