@@ -1,19 +1,19 @@
 package main
 
 import (
-	"net/http"
-	"strconv"
 	"log"
-	"fmt"
+	"net/http"
 	"os"
+	"strconv"
 
 	"io/ioutil"
+
 	"github.com/HendricksK/sacosbego/article"
+	"github.com/HendricksK/sacosbego/auth"
 	"github.com/HendricksK/sacosbego/page"
 	"github.com/HendricksK/sacosbego/post"
-	"github.com/HendricksK/sacosbego/track"
 	"github.com/HendricksK/sacosbego/rider"
-	"github.com/HendricksK/sacosbego/auth"
+	"github.com/HendricksK/sacosbego/track"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -21,24 +21,23 @@ import (
 
 /**
 * Base calls, returns data from a file.
-*/
-
+ */
 
 func check(e error) {
-    if e != nil {
-        panic(e)
-    }
+	if e != nil {
+		panic(e)
+	}
 }
 
 func GetApiCalls(c echo.Context) error {
 	content, err := ioutil.ReadFile("api.html")
-    if err != nil {
-        log.Fatal(err)
-    }
-    text := string(content)
+	if err != nil {
+		log.Fatal(err)
+	}
+	text := string(content)
 
-    return c.HTML(http.StatusOK, text)
-} 
+	return c.HTML(http.StatusOK, text)
+}
 
 /**
  * Article API calls
@@ -52,9 +51,9 @@ func GetArticles(c echo.Context) error {
 func GetArticle(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-	    log.Println(err)
+		log.Println(err)
 	}
-	
+
 	data := article.GetArticle(id)
 
 	return c.JSON(http.StatusOK, data)
@@ -77,9 +76,9 @@ func GetTracks(c echo.Context) error {
 func GetTrack(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-	    log.Println(err)
+		log.Println(err)
 	}
-	
+
 	data := track.GetTrack(id)
 
 	return c.JSON(http.StatusOK, data)
@@ -89,7 +88,6 @@ func GetTrackIds(c echo.Context) error {
 	data := track.GetTrackIds()
 	return c.JSON(http.StatusOK, data)
 }
-
 
 /**
  * Rider API calls
@@ -103,9 +101,9 @@ func GetRiders(c echo.Context) error {
 func GetRider(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-	    log.Println(err)
+		log.Println(err)
 	}
-	
+
 	data := rider.GetRider(id)
 
 	return c.JSON(http.StatusOK, data)
@@ -116,7 +114,6 @@ func GetRiderIds(c echo.Context) error {
 	return c.JSON(http.StatusOK, data)
 }
 
-
 /**
  * Page API calls
  */
@@ -124,12 +121,12 @@ func GetRiderIds(c echo.Context) error {
 func GetPage(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-	    log.Println(err)
+		log.Println(err)
 	}
-	
+
 	data := page.GetPage(id)
 
-	return c.JSON(http.StatusOK, data)	
+	return c.JSON(http.StatusOK, data)
 }
 
 /**
@@ -139,21 +136,21 @@ func GetPage(c echo.Context) error {
 func GetPosts(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-	    log.Println(err)
+		log.Println(err)
 	}
-	
+
 	data := post.GetPosts(id)
 
-	return c.JSON(http.StatusOK, data)	
+	return c.JSON(http.StatusOK, data)
 }
 
 func GetPostSection(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	section := c.Param("section")
 	if err != nil {
-	    log.Println(err)
+		log.Println(err)
 	}
-	
+
 	data := post.GetPostSection(id, section)
 
 	return c.JSON(http.StatusOK, data)
@@ -170,8 +167,8 @@ func GetSacosUploadToken(c echo.Context) error {
 /**
 * Main function call init echo server
 * Create our API calls as well
-* Setup our PORT	
-*/
+* Setup our PORT
+ */
 func main() {
 
 	// Echo init
@@ -185,8 +182,8 @@ func main() {
 
 	// CORS restricted
 	// wth GET, PUT, POST or DELETE method.
-	// 
-	// TODO: work on auth using https://echo.labstack.com/middleware/key-auth/ 
+	//
+	// TODO: work on auth using https://echo.labstack.com/middleware/key-auth/
 	// https://webdevstation.com/posts/user-authentication-with-go-using-jwt-token/
 
 	var environment = os.Getenv("ENVIRONMENT")
@@ -200,12 +197,11 @@ func main() {
 		}))
 	} else {
 		e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-			AllowOrigins: []string{"https://hendricksk.github.io","https://cycling.sacoshistory.org","https://hendricksk.github.io/sacos-dataform"},
+			AllowOrigins: []string{"https://hendricksk.github.io", "https://cycling.sacoshistory.org", "https://hendricksk.github.io/sacos-dataform"},
 			AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodOptions},
 		}))
 	}
 
-	
 	// Here lies API calls
 	e.GET("/", GetApiCalls)
 	e.GET("/articles", GetArticles)
@@ -230,17 +226,17 @@ func main() {
 	// Port setup for echo webserver
 	port, err := GetPort()
 	if err != nil {
-	    log.Println(err)
+		log.Println(err)
 	}
-	
+
 	e.Logger.Fatal(e.Start(port))
 }
 
 func GetPort() (string, error) {
-  // the PORT is supplied by Heroku
-  port := os.Getenv("PORT")
-  if port == "" {
-    return "", fmt.Errorf("PORT not set")
-  }
-  return ":" + port, nil
+	// the PORT is supplied by Heroku
+	port := os.Getenv("PORT")
+	if port == "" {
+		return ":9990", nil
+	}
+	return ":" + port, nil
 }
