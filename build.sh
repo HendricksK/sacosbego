@@ -8,4 +8,5 @@ source ./sacos-creds/make_creds.sh
 #build package into main
 echo "run build sacos golang"
 go build -o main
-
+# cp /go-web/sacosbego/main
+cp /go-web/sacosbego/main /usr/local/bin
