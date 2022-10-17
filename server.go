@@ -225,6 +225,8 @@ func main() {
 
 	// Port setup for echo webserver
 	port, err := GetPort()
+	log.Println("starting on port: ", port)
+	log.Println("postgressqlurl: ", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Println(err)
 	}
