@@ -37,3 +37,26 @@ any code updates to go will automatically rebuild
 # https://github.com/gravityblast/fresh
 # go get github.com/pilu/fresh
 # fresh
+
+# https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-centos-8
+# https://www.digitalocean.com/community/tutorials/how-to-deploy-a-go-web-application-using-nginx-on-ubuntu-18-04#step-3-setting-up-a-reverse-proxy-with-nginx
+
+## growing pains
+
+just so I can remember the pain I went through, add environmental variables to /etc/environment file
+then add the environmentFile to go web service
+
+[Unit]
+Description=goweb
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5s
+# test for now to get loadbalancer up and running
+EnvironmentFile=/etc/environment
+ExecStart=/usr/local/bin/main
+
+[Install]
+WantedBy=multi-user.target
+
