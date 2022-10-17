@@ -1,0 +1,3 @@
+[submodule "sacos-creds"]
+	path = sacos-creds
+	url = git@github.com:HendricksK/sacos-creds.git
