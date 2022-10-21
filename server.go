@@ -32,7 +32,7 @@ func GetApiCalls(c echo.Context) error {
 	content := []string{
 		"API calls<br><br>",
 		"/articles<br>",
-		"/articles/:id<br>",
+		"/article/:id<br>",
 		"/articleids<br>",
 		"/tracks<br>",
 		"/track/:id<br>",
