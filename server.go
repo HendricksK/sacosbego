@@ -30,7 +30,7 @@ func check(e error) {
 }
 
 func GetApiCalls(c echo.Context) error {
-	content, err := ioutil.ReadFile("api.html")
+	content, err := ioutil.ReadFile("./api.html")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -197,7 +197,7 @@ func main() {
 		}))
 	} else {
 		e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-			AllowOrigins: []string{"https://hendricksk.github.io", "https://cycling.sacoshistory.org", "https://hendricksk.github.io/sacos-dataform"},
+			AllowOrigins: []string{"https://hendricksk.github.io", "https://cycling.sacoshistory.org", "https://hendricksk.github.io/sacos-dataform", "*"},
 			AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodOptions},
 		}))
 	}
@@ -226,7 +226,7 @@ func main() {
 	// Port setup for echo webserver
 	port, err := GetPort()
 	log.Println("starting on port: ", port)
-	log.Println("postgressqlurl: ", os.Getenv("DATABASE_URL"))
+
 	if err != nil {
 		log.Println(err)
 	}
