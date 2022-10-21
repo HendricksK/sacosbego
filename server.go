@@ -5,8 +5,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-
-	"io/ioutil"
+	"strings"
 
 	"github.com/HendricksK/sacosbego/article"
 	"github.com/HendricksK/sacosbego/auth"
@@ -30,13 +29,24 @@ func check(e error) {
 }
 
 func GetApiCalls(c echo.Context) error {
-	content, err := ioutil.ReadFile("./api.html")
-	if err != nil {
-		log.Fatal(err)
+	content := []string{
+		"API calls<br><br>",
+		"/articles<br>",
+		"/articles/:id<br>",
+		"/articleids<br>",
+		"/tracks<br>",
+		"/track/:id<br>",
+		"/trackids<br>",
+		"/riders<br>",
+		"/rider/:id<br>",
+		"/riderids<br>",
+		"/page/:id<br>",
+		"/posts/:id<br>",
+		"/posts/:id/:section<br>",
+		"/auth/:name<br>",
 	}
-	text := string(content)
 
-	return c.HTML(http.StatusOK, text)
+	return c.HTML(http.StatusOK, strings.Join(content, " "))
 }
 
 /**
