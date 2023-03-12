@@ -1,3 +1,5 @@
 tmp/runner-build
 vendor/*
 tmp/*
+db-data/postgres/*
+main
