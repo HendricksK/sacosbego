@@ -1,11 +1,11 @@
-package article_model
+package models
 
 import (
 	"log"
-	"os"
-	"database/sql"
+	// "os"
+	// "database/sql"
 
-	_ "github.com/lib/pq"
+	// _ "github.com/lib/pq"
 )
 
 type Article struct {
@@ -17,74 +17,79 @@ type Article struct {
 	Author			string 	`json:"author"`
 }
 
-type ArticleId struct {
-	Id				int 	`json:"id"`
+func GetArticle() string {
+	log.Println("I am an article")
+	return "move it to the left... yeah"
 }
 
-var connStr = os.Getenv("DATABASE_URL")
-var db, err = sql.Open("postgres", connStr)
+// type ArticleId struct {
+// 	Id				int 	`json:"id"`
+// }
 
-func GetArticle(article_id int) Article {
+// var connStr = os.Getenv("DATABASE_URL")
+// var db, err = sql.Open("postgres", connStr)
 
-	var article Article
-	err := db.QueryRow("SELECT * FROM article WHERE id = $1;", article_id).Scan(&article.Id, &article.Name, &article.Article_data, &article.Url, &article.Datetime, &article.Author)
-	if err != nil {
-	    log.Println(err)
-	}
+// func GetArticle(article_id int) Article {
 
-	return Article {
-		Id: article.Id,
-		Name: article.Name,
-		Article_data: article.Article_data,
-		Url: article.Url,
-		Datetime: article.Datetime,
-		Author: article.Author }
-}
+// 	var article Article
+// 	err := db.QueryRow("SELECT * FROM article WHERE id = $1;", article_id).Scan(&article.Id, &article.Name, &article.Article_data, &article.Url, &article.Datetime, &article.Author)
+// 	if err != nil {
+// 	    log.Println(err)
+// 	}
 
-func GetArticles() []Article {
+// 	return Article {
+// 		Id: article.Id,
+// 		Name: article.Name,
+// 		Article_data: article.Article_data,
+// 		Url: article.Url,
+// 		Datetime: article.Datetime,
+// 		Author: article.Author }
+// }
 
-	var articles []Article
-	rows, err := db.Query("SELECT id, name, datetime, author FROM article")
-	if err != nil {
-	    log.Println(err)
-	}
-	defer rows.Close()
+// func GetArticles() []Article {
 
-	for rows.Next() {
+// 	var articles []Article
+// 	rows, err := db.Query("SELECT id, name, datetime, author FROM article")
+// 	if err != nil {
+// 	    log.Println(err)
+// 	}
+// 	defer rows.Close()
+
+// 	for rows.Next() {
 		
-		var article Article
-		err = rows.Scan(&article.Id, &article.Name, &article.Datetime, &article.Author)
-		if err != nil {
-		    log.Println(err)
-		}
+// 		var article Article
+// 		err = rows.Scan(&article.Id, &article.Name, &article.Datetime, &article.Author)
+// 		if err != nil {
+// 		    log.Println(err)
+// 		}
 
-		articles = append(articles, article)	
-	}
+// 		articles = append(articles, article)	
+// 	}
 
-	return articles
+// 	return articles
 	
-}
+// }
 
-func GetArticlesIds() []ArticleId{
+// func GetArticlesIds() []ArticleId{
 	
-	var articles []ArticleId
-	rows, err := db.Query("SELECT id FROM article")
-	if err != nil {
-	    log.Println(err)
-	}
-	defer rows.Close()
+// 	var articles []ArticleId
+// 	rows, err := db.Query("SELECT id FROM article")
+// 	if err != nil {
+// 	    log.Println(err)
+// 	}
+// 	defer rows.Close()
 
-	for rows.Next() {
+// 	for rows.Next() {
 		
-		var article ArticleId
-		err = rows.Scan(&article.Id)
-		if err != nil {
-		    log.Println(err)
-		}
+// 		var article ArticleId
+// 		err = rows.Scan(&article.Id)
+// 		if err != nil {
+// 		    log.Println(err)
+// 		}
 
-		articles = append(articles, article)	
-	}
+// 		articles = append(articles, article)	
+// 	}
 
-	return articles
-}
+// 	return articles
+// }
 

@@ -1,23 +1,21 @@
 package routes
 
-func routes http.Handler {
-	mux := chi.NewRouter()
+import (
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 
-	// specify who is allowed to connect
-	mux.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"https://*", "http://*"},
-		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
-		ExposedHeaders:   []string{"Link"},
-		AllowCredentials: true,
-		MaxAge:           300,
-	}))
 
-	mux.Use(middleware.Heartbeat("/ping"))
+	controllers "github.com/HendricksK/sacosbego/app/controllers"
+)
 
-	mux.Post("/", app.Broker)
+func Routes() {
+	e := echo.New()
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
 
-	mux.Post("/handle", app.HandleSubmission)
+	e.GET("/ping", controllers.Ping)
+	e.GET("/healthz", controllers.Healthz)
+	e.GET("/article/:id", controllers.GetArticle)
 
-	return mux
+	e.Logger.Fatal(e.Start("localhost:9001"))
 }
