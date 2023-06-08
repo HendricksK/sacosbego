@@ -4,8 +4,10 @@ import (
 	"log"
 	// "os"
 	// "database/sql"
+	database "github.com/HendricksK/sacosbego/app/database"
 
 	// _ "github.com/lib/pq"
+
 )
 
 type Article struct {
@@ -19,6 +21,8 @@ type Article struct {
 
 func GetArticle() string {
 	log.Println("I am an article")
+	db := database.Create()
+	database.Close(db)
 	return "move it to the left... yeah"
 }
 
