@@ -10,7 +10,8 @@ import (
 var database *sql.DB
 
 func Create() *sql.DB {
-	database, err := sql.Open("mysql", "sacos-dev:CorsairTX850M@tcp(192.168.0.134:3309)/sacos_dev")
+	// parseTime=true https://github.com/go-sql-driver/mysql#timetime-support
+	database, err := sql.Open("mysql", "dev-sacos:CorsairTX850M@tcp(192.168.0.134:3309)/sacos_dev?parseTime=true")
 	// id:password@tcp(your-amazonaws-uri.com:3306)/dbname
 	if err != nil {
 		panic(err)

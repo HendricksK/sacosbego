@@ -2,6 +2,9 @@ package models
 
 import (
 	"log"
+	"time"
+	// "fmt"
+	// "strings"
 	// "os"
 	// "database/sql"
 	database "github.com/HendricksK/sacosbego/app/database"
@@ -12,88 +15,102 @@ import (
 
 type Article struct {
 	Id				int 	`json:"id"`
-	Name 			string 	`json:"name"` 
-	Article_data 	string 	`json:"article_data"`
-	Url 			string 	`json:"url"`
-	Datetime 		string 	`json:"datetime"`
-	Author			string 	`json:"author"`
+	Name 			*string 	`json:"name"` 
+	Data 			*string 	`json:"article_data"`
+	Uri 			*string 	`json:"uri"`
+	Author			*string 	`json:"author"`
+	Tags			*string  `json:"tags"`  
+	CreatedAt 		*time.Time   	`json:"created_at"`
+	UpdatedAt 		*time.Time     	`json:"updated_at"`
 }
 
-func GetArticle() string {
-	log.Println("I am an article")
-	db := database.Create()
-	database.Close(db)
-	return "move it to the left... yeah"
+// CREATE TABLE article (
+//     id int UNSIGNED NOT NULL AUTO_INCREMENT,
+//     name varchar(255) NOT NULL,
+//     data text NULL,
+//     uri varchar(510) NULL,
+//     author varchar(255) NULL,
+//     created_at timestamp NOT NULL DEFAULT NOW(),
+//     updated_at timestamp NULL ON UPDATE NOW(),
+//     PRIMARY KEY (id)
+// );
+// CREATE TABLE article_aggregate (
+// 	article_id int UNSIGNED NOT NULL AUTO_INCREMENT,
+// 	tags JSON NULL,
+// 	created_at timestamp NOT NULL DEFAULT NOW(),
+//     updated_at timestamp NULL ON UPDATE NOW(),
+// 	PRIMARY KEY (article_id)
+// );
+
+var db = database.Create()
+var model string = "article"
+var model_aggregate string = "article_aggregate"
+
+
+func GetArticle(id int) Article {
+	var article Article
+	// CREATE CONN
+	fields := []string{
+		"id",
+		"name",
+		"data",
+		"uri",
+		"author"}
+
+	var selectQuery = BuildSelectQuery(fields, model, id)
+	
+	err := db.QueryRow(selectQuery).Scan(
+			&article.Id, 
+			&article.Name, 
+			&article.Data, 
+			&article.Uri, 
+			&article.Author)
+
+	if err != nil {
+		log.Println(err)
+	}
+	
+	// CLOSE CONN
+	return article
 }
 
-// type ArticleId struct {
-// 	Id				int 	`json:"id"`
-// }
+func GetArticles() []Article {
+	var articles []Article
+	// CREATE CONN
+	fields := []string{
+		model + ".id",
+		model + ".name",
+		model + ".data",
+		model + ".uri",
+		model + ".author",
+		model_aggregate + ".tags"}
 
-// var connStr = os.Getenv("DATABASE_URL")
-// var db, err = sql.Open("postgres", connStr)
-
-// func GetArticle(article_id int) Article {
-
-// 	var article Article
-// 	err := db.QueryRow("SELECT * FROM article WHERE id = $1;", article_id).Scan(&article.Id, &article.Name, &article.Article_data, &article.Url, &article.Datetime, &article.Author)
-// 	if err != nil {
-// 	    log.Println(err)
-// 	}
-
-// 	return Article {
-// 		Id: article.Id,
-// 		Name: article.Name,
-// 		Article_data: article.Article_data,
-// 		Url: article.Url,
-// 		Datetime: article.Datetime,
-// 		Author: article.Author }
-// }
-
-// func GetArticles() []Article {
-
-// 	var articles []Article
-// 	rows, err := db.Query("SELECT id, name, datetime, author FROM article")
-// 	if err != nil {
-// 	    log.Println(err)
-// 	}
-// 	defer rows.Close()
-
-// 	for rows.Next() {
-		
-// 		var article Article
-// 		err = rows.Scan(&article.Id, &article.Name, &article.Datetime, &article.Author)
-// 		if err != nil {
-// 		    log.Println(err)
-// 		}
-
-// 		articles = append(articles, article)	
-// 	}
-
-// 	return articles
+	var selectQuery = BuildSelectQueryWithAggregate(fields, model, model_aggregate)
 	
-// }
+	rows, err := db.Query(selectQuery)
+	if err != nil {
+		log.Println(err)
+	}
+	defer rows.Close()
 
-// func GetArticlesIds() []ArticleId{
-	
-// 	var articles []ArticleId
-// 	rows, err := db.Query("SELECT id FROM article")
-// 	if err != nil {
-// 	    log.Println(err)
-// 	}
-// 	defer rows.Close()
-
-// 	for rows.Next() {
+	for rows.Next() {
+		var article Article
 		
-// 		var article ArticleId
-// 		err = rows.Scan(&article.Id)
-// 		if err != nil {
-// 		    log.Println(err)
-// 		}
+		err = rows.Scan(
+			&article.Id, 
+			&article.Name, 
+			&article.Data, 
+			&article.Uri, 
+			&article.Author, 
+			&article.Tags)
 
-// 		articles = append(articles, article)	
-// 	}
+		if err != nil {
+		    log.Println(err)
+		}
 
-// 	return articles
-// }
-
+		log.Println(article)
+		articles = append(articles, article)
+	}
+	// CLOSE CONN
+	return articles
+}

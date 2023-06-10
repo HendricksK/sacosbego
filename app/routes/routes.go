@@ -13,9 +13,14 @@ func Routes() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
+	// HEALTH
 	e.GET("/ping", controllers.Ping)
 	e.GET("/healthz", controllers.Healthz)
+
+	// ARTICLES
 	e.GET("/article/:id", controllers.GetArticle)
+	e.GET("/articles", controllers.GetArticles)
+
 
 	e.Logger.Fatal(e.Start("localhost:9001"))
 }
