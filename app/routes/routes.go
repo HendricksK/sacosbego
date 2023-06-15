@@ -20,7 +20,9 @@ func Routes() {
 	// ARTICLES
 	e.GET("/article/:id", controllers.GetArticle)
 	e.GET("/articles", controllers.GetArticles)
+	e.POST("/article", controllers.CreateArticle)
 
 
-	e.Logger.Fatal(e.Start("localhost:9001"))
+
+	e.Logger.Fatal(e.Start("localhost:9002"))
 }

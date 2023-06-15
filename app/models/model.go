@@ -2,30 +2,45 @@ package models
 
 import (
 	"strings"
-	"fmt"
-	"log"
 )
 
 func BuildSelectQueryWithAggregate(fields []string, model string, model_aggregate string) string {
-	fieldList := fmt.Sprint(fields,",")
-	fieldList = strings.ReplaceAll(fieldList,"[","")
-	fieldList = strings.ReplaceAll(fieldList,"]","")
-	fieldList = strings.ReplaceAll(fieldList," ",",")
-	fieldList = strings.TrimRight(fieldList,",")
+	var fieldListString = ""
 
-	log.Println("SELECT "  + fieldList + " FROM " + model + " " + model + " LEFT JOIN " + model_aggregate + " " + model_aggregate + " ON " + model_aggregate + "." + model + "_id = " + model + ".id")
+	for _, v := range fields {
+		fieldListString = fieldListString + v + ","
+	}
 
-	return "SELECT "  + fieldList + " FROM " + model + " " + model + " LEFT JOIN " + model_aggregate + " " + model_aggregate + " ON " + model_aggregate + "." + model + "_id = " + model + ".id"
+	fieldListString = strings.TrimRight(fieldListString,",")
+
+	return "SELECT "  + fieldListString + " FROM " + model + " " + model + " LEFT JOIN " + model_aggregate + " " + model_aggregate + " ON " + model_aggregate + "." + model + "_id = " + model + ".id"
 } 
 
 
-func BuildSelectQuery(fields []string, model string, id int) string {
-	fieldList := fmt.Sprint(fields,",")
-	fieldList = strings.ReplaceAll(fieldList,"[","")
-	fieldList = strings.ReplaceAll(fieldList,"]","")
-	fieldList = strings.ReplaceAll(fieldList," ",",")
-	fieldList = strings.TrimRight(fieldList,",")
+func BuildSelectQuery(fields []string, model string) string {
+	var fieldListString = ""
 
-	return "SELECT "  + fieldList + " FROM " + model
+	for _, v := range fields {
+		fieldListString = fieldListString + v + ","
+	}
+
+	fieldListString = strings.TrimRight(fieldListString,",")
+
+	return "SELECT "  + fieldListString + " FROM " + model
 }
 
+func BuildInsertQuery(fields []string, model string) string {
+
+	var fieldListString = ""
+	var fieldInsertParams = ""
+
+	for _, v := range fields {
+		fieldListString = fieldListString + v + ","
+		fieldInsertParams = fieldInsertParams + "?,"
+	}
+
+	fieldListString = strings.TrimRight(fieldListString,",")
+	fieldInsertParams = strings.TrimRight(fieldInsertParams, ",")
+
+	return "INSERT INTO " + model + " (" + fieldListString + ") VALUES (" + fieldInsertParams + ")"
+}
