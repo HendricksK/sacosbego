@@ -1,7 +1,7 @@
 package models
 
 import (
-	"log"
+	// "log"
 	"time"
 	"net/http"
 	"context"
@@ -9,12 +9,10 @@ import (
 	// "encoding/json"
 	database "github.com/HendricksK/sacosbego/app/database"
 
-	// _ "github.com/lib/pq"
-
 )
 
 type Article struct {
-	Id				int 		`json:"id"`
+	Id				*int 		`json:"id"`
 	Name 			*string 	`json:"name"` 
 	Data 			*string 	`json:"data"`
 	Uri 			*string 	`json:"uri"`
@@ -26,7 +24,7 @@ type Article struct {
 
 
 type ArticleAggregate struct {
-	Id				int 		`json:"id"`
+	ArticleId		*int 		`json:"article_id"`
 	Tags 			*string 	`json:"tags"` 
 	CreatedAt 		*time.Time  `json:"created_at"`
 	UpdatedAt 		*time.Time  `json:"updated_at"`
@@ -52,8 +50,6 @@ func GetArticle(id string) Article {
 		model_aggregate + ".tags"}
 
 	var selectQuery = BuildSelectQueryWithAggregate(fields, model, model_aggregate)
-
-	log.Println(selectQuery)
 	
 	err := db.QueryRow(selectQuery + " WHERE id =" + id).Scan(
 			&article.Id, 
@@ -64,7 +60,8 @@ func GetArticle(id string) Article {
 			&article.Tags)
 
 	if err != nil {
-		log.Println(err)
+		panic(err)
+		return article
 	}
 
 	database.Close(db)
@@ -92,7 +89,8 @@ func GetArticles() []Article {
 	
 	rows, err := db.Query(selectQuery)
 	if err != nil {
-		log.Println(err)
+		panic(err)
+		return articles
 	}
 	defer rows.Close()
 
@@ -108,10 +106,9 @@ func GetArticles() []Article {
 			&article.Tags)
 
 		if err != nil {
-		    log.Println(err)
+		    panic(err)
 		}
 
-		log.Println(article)
 		articles = append(articles, article)
 	}
 
@@ -152,7 +149,7 @@ func CreateArticle(c echo.Context) int {
 
 	insertAggregateQuery := BuildInsertQuery(aggregrateFields, model_aggregate)
 
-	resultAggregate, err := db.ExecContext(context.Background(), insertAggregateQuery, articleId, *article.Tags) 
+	_, err = db.ExecContext(context.Background(), insertAggregateQuery, articleId, *article.Tags) 
 	if err != nil {	
 		panic(err)
 		return http.StatusBadRequest
@@ -163,29 +160,37 @@ func CreateArticle(c echo.Context) int {
 	return http.StatusCreated
 }
 
-func CreateArticleAggregate() int {
-	var article_aggregate ArticleAggregate
+// func CreateArticleAggregate(c echo.Context) int {
+// 	var articleAggregate ArticleAggregate
 
-	db := database.Open()
+// 	db := database.Open()
 
-	err := c.Bind(&article); if err != nil {
-		panic(err)
-	    return http.StatusBadRequest
-	}
+// 	err := c.Bind(&articleAggregate); if err != nil {
+// 		panic(err)
+// 	    return http.StatusBadRequest
+// 	}
 
-	aggregrateFields := []string{
-		"article_id",
-		"tags"}
+// 	aggregrateFields := []string{
+// 		"article_id",
+// 		"tags"}
 
-	insertAggregateQuery := BuildInsertQuery(aggregrateFields, model_aggregate)
+// 	insertAggregateQuery := BuildInsertQuery(aggregrateFields, model_aggregate)
 
-	resultAggregate, err := db.ExecContext(context.Background(), insertAggregateQuery, articleId, *article.Tags) 
-	if err != nil {	
-		panic(err)
-		return http.StatusBadRequest
-	}
+// 	_, err = db.ExecContext(context.Background(), insertAggregateQuery, articleAggregate.ArticleId, *articleAggregate.Tags) 
+// 	if err != nil {	
+// 		panic(err)
+// 		return http.StatusBadRequest
+// 	}
 
-	database.Close(db)
+// 	database.Close(db)
 
-	return http.StatusCreated
+// 	return http.StatusCreated
+// }
+
+func UpdateArticle(c echo.Context) int {
+	return http.StatusForbidden
+}
+
+func DeleteArticle(c echo.Context) int {
+	return http.StatusForbidden
 }

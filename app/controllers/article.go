@@ -9,19 +9,43 @@ import (
 	models "github.com/HendricksK/sacosbego/app/models"
 )
 
-func getHTTPStatus() {
-
-}
-
 func GetArticle(c echo.Context) error {
 	id := c.Param("id")
-	return c.JSON(http.StatusOK, models.GetArticle(id))
+	response := models.GetArticle(id)
+	httpStatusCode := http.StatusOK
+
+	if response.Id == nil {
+		httpStatusCode = http.StatusNotFound
+	} 
+
+	return c.JSON(httpStatusCode, response)
 }
 
 func GetArticles(c echo.Context) error {
-	return c.JSON(http.StatusOK, models.GetArticles())
+	// For now, not enough data to stress about pagination
+
+	response := models.GetArticles()
+	httpStatusCode := http.StatusOK
+
+	if len(response) == 0 {
+		httpStatusCode = http.StatusNotFound
+	} 
+
+	return c.JSON(httpStatusCode, response)
 }
 
 func CreateArticle(c echo.Context) error {
-	return c.JSON(http.StatusCreated, models.CreateArticle(c))
+	httpStatusCode := models.CreateArticle(c)
+	return c.JSON(httpStatusCode, 0)
+}
+
+
+func PatchArticle(c echo.Context) error {
+	httpStatusCode := models.UpdateArticle(c)
+	return c.JSON(httpStatusCode, 0)
+}
+
+func DeleteArticle(c echo.Context) error {
+	httpStatusCode := models.DeleteArticle(c)
+	return c.JSON(httpStatusCode, 0)
 }

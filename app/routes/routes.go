@@ -4,7 +4,6 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
-
 	controllers "github.com/HendricksK/sacosbego/app/controllers"
 )
 
@@ -21,8 +20,8 @@ func Routes() {
 	e.GET("/article/:id", controllers.GetArticle)
 	e.GET("/articles", controllers.GetArticles)
 	e.POST("/article", controllers.CreateArticle)
-
-
+	e.PATCH("/article/:id", controllers.PatchArticle)
+	e.DELETE("/article/:id", controllers.DeleteArticle)
 
 	e.Logger.Fatal(e.Start("localhost:9002"))
 }

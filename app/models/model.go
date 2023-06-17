@@ -2,6 +2,7 @@ package models
 
 import (
 	"strings"
+	"log"
 )
 
 func BuildSelectQueryWithAggregate(fields []string, model string, model_aggregate string) string {
@@ -43,4 +44,19 @@ func BuildInsertQuery(fields []string, model string) string {
 	fieldInsertParams = strings.TrimRight(fieldInsertParams, ",")
 
 	return "INSERT INTO " + model + " (" + fieldListString + ") VALUES (" + fieldInsertParams + ")"
+}
+
+func BuildUpdateQuery(fields []string, model string, where_statement string) string {
+
+	var updateString = ""
+
+	for _, v := range fields {
+		updateString = updateString + v + "?, "
+	}
+
+	updateString = strings.TrimRight(updateString,",")
+
+	log.Println("UPDATE " + model + "SET" + updateString + " WHERE " + where_statement)
+
+	return "UPDATE " + model + "SET" + updateString + " WHERE " + where_statement
 }
