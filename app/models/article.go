@@ -1,14 +1,14 @@
 package models
 
 import (
-	// "log"
+	"runtime"
 	"time"
 	"net/http"
 	"context"
 	"github.com/labstack/echo/v4"
 	// "encoding/json"
 	database "github.com/HendricksK/sacosbego/app/database"
-
+	extensions "github.com/HendricksK/sacosbego/app/extensions"
 )
 
 type Article struct {
@@ -60,8 +60,8 @@ func GetArticle(id string) Article {
 			&article.Tags)
 
 	if err != nil {
-		panic(err)
-		return article
+		_, filename, line, _ := runtime.Caller(1)
+		extensions.Log(err.Error(), filename, line)
 	}
 
 	database.Close(db)
@@ -89,7 +89,8 @@ func GetArticles() []Article {
 	
 	rows, err := db.Query(selectQuery)
 	if err != nil {
-		panic(err)
+		_, filename, line, _ := runtime.Caller(1)
+		extensions.Log(err.Error(), filename, line)
 		return articles
 	}
 	defer rows.Close()
@@ -106,6 +107,8 @@ func GetArticles() []Article {
 			&article.Tags)
 
 		if err != nil {
+			_, filename, line, _ := runtime.Caller(1)
+			extensions.Log(err.Error(), filename, line)
 		    panic(err)
 		}
 
@@ -124,7 +127,8 @@ func CreateArticle(c echo.Context) int {
 	db := database.Open()
 
 	err := c.Bind(&article); if err != nil {
-		panic(err)
+		_, filename, line, _ := runtime.Caller(1)
+		extensions.Log(err.Error(), filename, line)
 	    return http.StatusBadRequest
 	}
 
@@ -151,7 +155,8 @@ func CreateArticle(c echo.Context) int {
 
 	_, err = db.ExecContext(context.Background(), insertAggregateQuery, articleId, *article.Tags) 
 	if err != nil {	
-		panic(err)
+		_, filename, line, _ := runtime.Caller(1)
+		extensions.Log(err.Error(), filename, line)
 		return http.StatusBadRequest
 	}
 
