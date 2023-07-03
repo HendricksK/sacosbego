@@ -16,7 +16,8 @@ type Article struct {
 	Name 			*string 	`json:"name"` 
 	Data 			*string 	`json:"data"`
 	Uri 			*string 	`json:"uri"`
-	Author			*string 	`json:"author"` 
+	Author			*string 	`json:"author"`
+	Tags			*string		`json:"tags"`  
 	CreatedAt 		*time.Time  `json:"created_at"`
 	UpdatedAt 		*time.Time  `json:"updated_at"`
 }
@@ -166,7 +167,7 @@ func UpdateArticle(c echo.Context) int {
 }
 
 // TODO: build out actual delete
-// maybe add an extra column, is_ative? 
+// maybe add an extra column, is_ative?
 func DeleteArticle(c echo.Context) int {
 	return http.StatusForbidden
 }
