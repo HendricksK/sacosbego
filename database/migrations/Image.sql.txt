@@ -1,5 +1,7 @@
 CREATE TABLE image (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
+    entity varchar(100) NOT NULL,
+    entity_id int UNSIGNED NOT NULL,
     url varchar(510) NULL,
     created_at timestamp NOT NULL DEFAULT NOW(),
     updated_at timestamp NULL ON UPDATE NOW(),

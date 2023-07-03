@@ -30,8 +30,8 @@ type ArticleAggregate struct {
 	UpdatedAt 		*time.Time  `json:"updated_at"`
 }
 
-var model string = "article"
-var model_aggregate string = "article_aggregate"
+var article_model string = "article"
+var article_model_aggregate string = "article_aggregate"
 
 
 func GetArticle(id string) Article {
@@ -42,14 +42,14 @@ func GetArticle(id string) Article {
 
 	// CREATE CONN
 	fields := []string{
-		model + ".id",
-		model + ".name",
-		model + ".data",
-		model + ".uri",
-		model + ".author",
-		model_aggregate + ".tags"}
+		article_model + ".id",
+		article_model + ".name",
+		article_model + ".data",
+		article_model + ".uri",
+		article_model + ".author",
+		article_model_aggregate + ".tags"}
 
-	var selectQuery = BuildSelectQueryWithAggregate(fields, model, model_aggregate)
+	var selectQuery = BuildSelectQueryWithAggregate(fields, article_model, article_model_aggregate)
 	
 	err := db.QueryRow(selectQuery + " WHERE id =" + id).Scan(
 			&article.Id, 
@@ -78,14 +78,14 @@ func GetArticles() []Article {
 
 	// CREATE CONN
 	fields := []string{
-		model + ".id",
-		model + ".name",
-		model + ".data",
-		model + ".uri",
-		model + ".author",
-		model_aggregate + ".tags"}
+		article_model + ".id",
+		article_model + ".name",
+		article_model + ".data",
+		article_model + ".uri",
+		article_model + ".author",
+		article_model_aggregate + ".tags"}
 
-	var selectQuery = BuildSelectQueryWithAggregate(fields, model, model_aggregate)
+	var selectQuery = BuildSelectQueryWithAggregate(fields, article_model, article_model_aggregate)
 	
 	rows, err := db.Query(selectQuery)
 	if err != nil {
@@ -134,7 +134,7 @@ func CreateArticle(c echo.Context) int {
 		"uri",
 		"author"}
 
-	insertQuery := BuildInsertQuery(fields, model)
+	insertQuery := BuildInsertQuery(fields, article_model)
 
 	result, err := db.ExecContext(context.Background(), insertQuery, *article.Name, *article.Data, *article.Uri, *article.Author)
 	if err != nil {
@@ -147,7 +147,7 @@ func CreateArticle(c echo.Context) int {
 		"article_id",
 		"tags"}
 
-	insertAggregateQuery := BuildInsertQuery(aggregrateFields, model_aggregate)
+	insertAggregateQuery := BuildInsertQuery(aggregrateFields, article_model_aggregate)
 
 	_, err = db.ExecContext(context.Background(), insertAggregateQuery, articleId, *article.Tags) 
 	if err != nil {	

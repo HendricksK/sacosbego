@@ -2,7 +2,7 @@ CREATE TABLE rider (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
     first_name varchar(255) NOT NULL,
     last_name varchar(100) NOT NULL,
-    date_of_birth date NOT NULL,
+    date_of_birth date NULL,
     data text NULL,
     uri varchar(510) NULL,
     created_at timestamp NOT NULL DEFAULT NOW(),
