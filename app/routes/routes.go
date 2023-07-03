@@ -20,8 +20,15 @@ func Routes() {
 	e.GET("/article/:id", controllers.GetArticle)
 	e.GET("/articles", controllers.GetArticles)
 	e.POST("/article", controllers.CreateArticle)
-	e.PATCH("/article/:id", controllers.PatchArticle)
-	e.DELETE("/article/:id", controllers.DeleteArticle)
+	e.PATCH("/article", controllers.PatchArticle)
+	e.DELETE("/article", controllers.DeleteArticle)
+
+	// RIDER
+	e.GET("/rider/:id", controllers.GetRider)
+	e.GET("/riders", controllers.GetRiders)
+	e.POST("/rider", controllers.CreateRider)
+	e.PATCH("/rider", controllers.PatchRider)
+	e.DELETE("/rider", controllers.DeleteRider)
 
 	e.Logger.Fatal(e.Start("localhost:9002"))
 }

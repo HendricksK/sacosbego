@@ -16,8 +16,7 @@ type Article struct {
 	Name 			*string 	`json:"name"` 
 	Data 			*string 	`json:"data"`
 	Uri 			*string 	`json:"uri"`
-	Author			*string 	`json:"author"`
-	Tags			*string		`json:"tags"`  
+	Author			*string 	`json:"author"` 
 	CreatedAt 		*time.Time  `json:"created_at"`
 	UpdatedAt 		*time.Time  `json:"updated_at"`
 }
@@ -160,37 +159,14 @@ func CreateArticle(c echo.Context) int {
 	return http.StatusCreated
 }
 
-// func CreateArticleAggregate(c echo.Context) int {
-// 	var articleAggregate ArticleAggregate
 
-// 	db := database.Open()
-
-// 	err := c.Bind(&articleAggregate); if err != nil {
-// 		panic(err)
-// 	    return http.StatusBadRequest
-// 	}
-
-// 	aggregrateFields := []string{
-// 		"article_id",
-// 		"tags"}
-
-// 	insertAggregateQuery := BuildInsertQuery(aggregrateFields, model_aggregate)
-
-// 	_, err = db.ExecContext(context.Background(), insertAggregateQuery, articleAggregate.ArticleId, *articleAggregate.Tags) 
-// 	if err != nil {	
-// 		panic(err)
-// 		return http.StatusBadRequest
-// 	}
-
-// 	database.Close(db)
-
-// 	return http.StatusCreated
-// }
-
+// TODO: build out actual update
 func UpdateArticle(c echo.Context) int {
 	return http.StatusForbidden
 }
 
+// TODO: build out actual delete
+// maybe add an extra column, is_ative? 
 func DeleteArticle(c echo.Context) int {
 	return http.StatusForbidden
 }

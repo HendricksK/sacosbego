@@ -60,3 +60,7 @@ ExecStart=/usr/local/bin/main
 [Install]
 WantedBy=multi-user.target
 
+using .env files here https://towardsdatascience.com/use-environment-variable-in-your-next-golang-project-39e17c3aaa66 at some point
+
+images can be found here https://github.com/HendricksK/sacos_images
+

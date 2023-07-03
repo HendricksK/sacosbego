@@ -1,0 +1,15 @@
+CREATE TABLE image (
+    id int UNSIGNED NOT NULL AUTO_INCREMENT,
+    url varchar(510) NULL,
+    created_at timestamp NOT NULL DEFAULT NOW(),
+    updated_at timestamp NULL ON UPDATE NOW(),
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE image_aggregate (
+    image_id int UNSIGNED NOT NULL AUTO_INCREMENT,
+    tags JSON NULL,
+    created_at timestamp NOT NULL DEFAULT NOW(),
+    updated_at timestamp NULL ON UPDATE NOW(),
+    PRIMARY KEY (image_id)
+);
