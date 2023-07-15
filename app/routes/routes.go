@@ -30,5 +30,11 @@ func Routes() {
 	e.PATCH("/rider", controllers.PatchRider)
 	e.DELETE("/rider", controllers.DeleteRider)
 
+	// IMAGE 
+	e.GET("/image/tags/:tags", controllers.GetImagesViaTag)
+	e.GET("/image/entity/:entity", controllers.GetImagesViaEntity)
+	e.POST("/image", controllers.CreateImage)
+
+
 	e.Logger.Fatal(e.Start("localhost:9002"))
 }
