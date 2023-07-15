@@ -1,0 +1,19 @@
+CREATE TABLE page (
+    id int UNSIGNED NOT NULL AUTO_INCREMENT,
+    created_at timestamp NOT NULL DEFAULT NOW(),
+    updated_at timestamp NULL ON UPDATE NOW(),
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE post (
+    id int UNSIGNED NOT NULL AUTO_INCREMENT,
+    page_id int UNSIGNED NOT NULL,
+    section VARCHAR(100) NULL,
+    data TEXT NULL,
+    data_json JSON NULL,
+    `order` int NULL,
+    created_at timestamp NOT NULL DEFAULT NOW(),
+    updated_at timestamp NULL ON UPDATE NOW(),
+    PRIMARY KEY (id),
+    FOREIGN KEY (page_id) REFERENCES page(id)
+);
