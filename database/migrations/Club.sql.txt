@@ -1,0 +1,18 @@
+CREATE TABLE club (
+    id int UNSIGNED NOT NULL AUTO_INCREMENT,
+    name varchar(255) NOT NULL,
+    data text NULL,
+    uri varchar(510) NULL,
+    track_id int NULL,
+    created_at timestamp NOT NULL DEFAULT NOW(),
+    updated_at timestamp NULL ON UPDATE NOW(),
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE club_aggregate (
+	club_id int UNSIGNED NOT NULL AUTO_INCREMENT,
+	tags JSON NULL,
+	created_at timestamp NOT NULL DEFAULT NOW(),
+    updated_at timestamp NULL ON UPDATE NOW(),
+	PRIMARY KEY (article_id)
+);

@@ -31,6 +31,7 @@ func GetImagesViaTag(c echo.Context) error {
 
 	if len(response) == 0 {
 		httpStatusCode = http.StatusNotFound
+
 	} 
 
 	return c.JSON(httpStatusCode, response)

@@ -4,6 +4,7 @@ CREATE TABLE rider (
     last_name varchar(100) NOT NULL,
     date_of_birth date NULL,
     data text NULL,
+    club_id int NULL,
     uri varchar(510) NULL,
     created_at timestamp NOT NULL DEFAULT NOW(),
     updated_at timestamp NULL ON UPDATE NOW(),
@@ -18,7 +19,7 @@ CREATE TABLE rider_aggregate (
 	PRIMARY KEY (rider_id)
 );
 
-CREATE TABLE rider_accolade (
+CREATE TABLE rider_accolades (
     rider_id int UNSIGNED NOT NULL AUTO_INCREMENT,
     name varchar(255) NOT NULL,
     year int,
@@ -27,3 +28,8 @@ CREATE TABLE rider_accolade (
     updated_at timestamp NULL ON UPDATE NOW(),
     PRIMARY KEY (rider_id)
 );
+
+-- UPDATE TO rider table 
+
+ALTER TABLE rider ADD club_id INT NULL;
+ALTER TABLE rider CHANGE club_id club_id INT NULL AFTER `data`;
