@@ -64,3 +64,12 @@ using .env files here https://towardsdatascience.com/use-environment-variable-in
 
 images can be found here https://github.com/HendricksK/sacos_images
 
+# TGFDO (thank god for digital ocean)
+# https://www.digitalocean.com/community/tutorials/how-to-deploy-a-go-web-application-using-nginx-on-ubuntu-18-04
+
+on local just run
+sudo service goweb stop for FE testing. use watcher for everything else
+
+# WATCHER 
+# https://pkg.go.dev/github.com/radovskyb/watcher
+# https://github.com/radovskyb/watcher

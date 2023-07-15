@@ -35,6 +35,6 @@ func Routes() {
 	e.GET("/image/entity/:entity", controllers.GetImagesViaEntity)
 	e.POST("/image", controllers.CreateImage)
 
-
+	// need to get port from os here.
 	e.Logger.Fatal(e.Start("localhost:9002"))
 }
