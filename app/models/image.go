@@ -48,7 +48,7 @@ func GetImages(entity string, entity_id string) []Image {
 
 	var selectQuery = BuildSelectQueryWithAggregate(fields, image_model, image_model_aggregate)
 	
-	rows, err := db.Query(selectQuery + " WHERE " + image_model + ".entity = '" + entity + "' AND " + image_model + ".id = " + entity_id)
+	rows, err := db.Query(selectQuery + ` WHERE ` + image_model + `.entity = '` + entity + `' AND ` + image_model + `.id = ` + entity_id)
 	if err != nil {
 		_, filename, line, _ := runtime.Caller(1)
 		extensions.Log(err.Error(), filename, line)
@@ -96,15 +96,13 @@ func GetImagesViaTags(tags string) []Image {
 
 	var selectQuery = BuildSelectQueryWithAggregate(fields, image_model, image_model_aggregate)
 
-	fmt.Println(selectQuery)
-
 	// SELECT * FROM image WHERE image.id IN(
 		// SELECT image_id FROM image_aggregate ia2 WHERE JSON_CONTAINS(JSON_EXTRACT(tags, '$.tags'), '["williams"]'))
 	tagSlice := strings.Split(tags, ",")
 
 	for _, tag := range tagSlice {
-		fmt.Println(tag)
-		rows, err := db.Query(selectQuery + " WHERE " + image_model + ".id IN(SELECT image_id FROM image_aggregate WHERE JSON_CONTAINS(JSON_EXTRACT(tags, '$.tags'), '[williams]')))" )
+
+		rows, err := db.Query(selectQuery + ` WHERE ` + image_model + `.id IN(SELECT image_id FROM image_aggregate WHERE JSON_CONTAINS(JSON_EXTRACT(tags, '$.tags'), '["` + tag + `"]'))`)
 		if err != nil {
 			_, filename, line, _ := runtime.Caller(1)
 			extensions.Log(err.Error(), filename, line)
@@ -155,7 +153,7 @@ func GetImagesViaEntity(entity string) []Image {
 
 	fmt.Println(selectQuery)
 	
-	rows, err := db.Query(selectQuery + " WHERE " + image_model + ".entity = '" + entity + "'")
+	rows, err := db.Query(selectQuery + ` WHERE ` + image_model + `.entity = '` + entity + `'`)
 	if err != nil {
 		_, filename, line, _ := runtime.Caller(1)
 		extensions.Log(err.Error(), filename, line)

@@ -2,7 +2,6 @@ package models
 
 import (
 	"strings"
-	"log"
 )
 
 func BuildSelectQueryWithAggregate(fields []string, model string, model_aggregate string) string {
@@ -14,7 +13,7 @@ func BuildSelectQueryWithAggregate(fields []string, model string, model_aggregat
 
 	fieldListString = strings.TrimRight(fieldListString,",")
 
-	return "SELECT "  + fieldListString + " FROM " + model + " " + model + " LEFT JOIN " + model_aggregate + " " + model_aggregate + " ON " + model_aggregate + "." + model + "_id = " + model + ".id"
+	return `SELECT `  + fieldListString + ` FROM ` + model + ` ` + model + ` LEFT JOIN ` + model_aggregate + ` ` + model_aggregate + ` ON ` + model_aggregate + `.` + model + `_id = ` + model + `.id`
 } 
 
 
@@ -27,7 +26,7 @@ func BuildSelectQuery(fields []string, model string) string {
 
 	fieldListString = strings.TrimRight(fieldListString,",")
 
-	return "SELECT "  + fieldListString + " FROM " + model
+	return `SELECT `  + fieldListString + ` FROM ` + model
 }
 
 func BuildInsertQuery(fields []string, model string) string {
@@ -43,7 +42,7 @@ func BuildInsertQuery(fields []string, model string) string {
 	fieldListString = strings.TrimRight(fieldListString,",")
 	fieldInsertParams = strings.TrimRight(fieldInsertParams, ",")
 
-	return "INSERT INTO " + model + " (" + fieldListString + ") VALUES (" + fieldInsertParams + ")"
+	return `INSERT INTO ` + model + ` (` + fieldListString + `) VALUES (` + fieldInsertParams + `)`
 }
 
 func BuildUpdateQuery(fields []string, model string, where_statement string) string {
@@ -56,7 +55,5 @@ func BuildUpdateQuery(fields []string, model string, where_statement string) str
 
 	updateString = strings.TrimRight(updateString,",")
 
-	log.Println("UPDATE " + model + "SET" + updateString + " WHERE " + where_statement)
-
-	return "UPDATE " + model + "SET" + updateString + " WHERE " + where_statement
+	return `UPDATE ` + model + `SET` + updateString + ` WHERE ` + where_statement
 }
