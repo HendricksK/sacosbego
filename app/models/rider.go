@@ -2,7 +2,7 @@ package models
 
 import (
 	"runtime"
-	"fmt"
+	// "fmt"
 	"time"
 	"net/http"
 	// "strconv"
@@ -23,7 +23,7 @@ type Rider struct {
 	Tags			*string		`json:"tags"`
 	CreatedAt 		*time.Time  `json:"created_at"`
 	UpdatedAt 		*time.Time  `json:"updated_at"`
-	Images			[]Image	`json:"images"`
+	Images			[]Image		`json:"images"`
 }
 
 
@@ -75,8 +75,6 @@ func GetRider(id string) Rider {
 			&rider.Tags)
 
 	rider.Images = GetImages(rider_model, id)
-
-	fmt.Printf("%v", rider.Images)
 
 	if err != nil {
 		_, filename, line, _ := runtime.Caller(1)
