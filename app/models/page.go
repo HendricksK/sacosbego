@@ -14,6 +14,7 @@ import (
 
 type Page struct {
 	Id				*int 		`json:"id"`
+	Name 			*string		`json:"name"`
 	CreatedAt 		*time.Time  `json:"created_at"`
 	UpdatedAt 		*time.Time  `json:"updated_at"`
 	Posts			[]Post		`json:"posts"`
@@ -33,6 +34,7 @@ func GetPage(id string) Page {
 	// CREATE CONN
 	fields := []string{
 		page_model + ".id",
+		page_model + ".name",
 		page_model + ".created_at",
 		page_model + ".updated_at"}
 
@@ -40,6 +42,7 @@ func GetPage(id string) Page {
 	
 	err := db.QueryRow(selectQuery + " WHERE id =" + id ).Scan(
 		&page.Id,
+		&page.Name,
 		&page.CreatedAt, 
 		&page.UpdatedAt)
 
