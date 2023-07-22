@@ -1,6 +1,7 @@
 package models
 
 import (
+	// "fmt"
 	"runtime"
 	"time"
 	"net/http"
@@ -32,13 +33,15 @@ func GetPage(id string) Page {
 	// CREATE CONN
 	fields := []string{
 		page_model + ".id",
-		page_model + ".name",
-		page_foreign_join + ".*"}
+		page_model + ".created_at",
+		page_model + ".updated_at"}
 
-	var selectQuery = BuildSelectQueryWithAggregate(fields, page_model, page_foreign_join)
+	var selectQuery = BuildSelectQuery(fields, page_model)
 	
-	err := db.QueryRow(selectQuery + " WHERE id =" + id).Scan(
-		&page.Id)
+	err := db.QueryRow(selectQuery + " WHERE id =" + id ).Scan(
+		&page.Id,
+		&page.CreatedAt, 
+		&page.UpdatedAt)
 
 	page.Posts = GetPostsViaPageId(id)
 

@@ -10,7 +10,7 @@ import (
 var database *sql.DB
 
 // 192.168.0.134:3309
-var db_host = "172.17.0.3:3306";
+var db_host = "172.17.0.2:3306";
 
 func Open() *sql.DB {
 	// parseTime=true https://github.com/go-sql-driver/mysql#timetime-support

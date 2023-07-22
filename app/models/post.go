@@ -42,7 +42,7 @@ func GetPostsViaPageId(page_id string) []Post {
 
 	var selectQuery = BuildSelectQuery(fields, post_model)
 	
-	rows, err := db.Query(selectQuery + " WHERE page_id = " + page_id)
+	rows, err := db.Query(selectQuery + " WHERE page_id = " + page_id + " ORDER by `order` ASC")
 	if err != nil {
 		_, filename, line, _ := runtime.Caller(1)
 		extensions.Log(err.Error(), filename, line)
