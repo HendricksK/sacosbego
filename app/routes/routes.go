@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	controllers "github.com/HendricksK/sacosbego/app/controllers"
+	// auth "github.com/HendricksK/sacosbego/app/auth"
 )
 
 func Routes() {
@@ -18,6 +19,7 @@ func Routes() {
 		AllowOrigins: []string{"http://sacos.localhost"},
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodOptions},
 	}))
+	
 
 	// HEALTH
 	e.GET("/ping", controllers.Ping)

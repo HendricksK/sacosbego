@@ -73,3 +73,10 @@ sudo service goweb stop for FE testing. use watcher for everything else
 # WATCHER 
 # https://pkg.go.dev/github.com/radovskyb/watcher
 # https://github.com/radovskyb/watcher
+
+
+## Go 
+## go mod tidy 
+
+## submodules
+git submodule update --init --recursive
