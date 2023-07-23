@@ -2,10 +2,10 @@ package models
 
 import (
 	"runtime"
-	// "fmt"
+	"fmt"
 	"time"
 	"net/http"
-	// "strconv"
+	"strconv"
 	// "context"
 	"github.com/labstack/echo/v4"
 	// "encoding/json"
@@ -88,14 +88,63 @@ func GetRider(id string) Rider {
 }
 
 // TODO: build out actual update
+// Need to probably page this at some point
 func GetRiders() []Rider {
 
 	var riders []Rider
 
 	db := database.Open()
 
+	// CREATE CONN
+	fields := []string{
+		rider_model + ".id",
+		rider_model + ".first_name",
+		rider_model + ".last_name",
+		rider_model + ".date_of_birth",
+		rider_model + ".data",
+		rider_model + ".uri",
+		rider_model_aggregate + ".tags"}
+
+	var selectQuery = BuildSelectQueryWithAggregate(fields, rider_model, rider_model_aggregate)
+	
+	fmt.Println(selectQuery)
+
+	rows, err := db.Query(selectQuery)
+	if err != nil {
+		_, filename, line, _ := runtime.Caller(1)
+		extensions.Log(err.Error(), filename, line)
+		return riders
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var rider Rider
+		
+		err = rows.Scan(
+			&rider.Id, 
+			&rider.FirstName, 
+			&rider.LastName,
+			&rider.DateOfBirth,  
+			&rider.Data, 
+			&rider.Uri,
+			&rider.Tags)
+
+
+		id := strconv.Itoa(*rider.Id)
+		rider.Images = GetImages(rider_model, id)	
+
+		if err != nil {
+			_, filename, line, _ := runtime.Caller(1)
+			extensions.Log(err.Error(), filename, line)
+		    panic(err)
+		}
+
+		riders = append(riders, rider)
+	}
+
 	database.Close(db)
 
+	// CLOSE CONN
 	return riders
 }
 

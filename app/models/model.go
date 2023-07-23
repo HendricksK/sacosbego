@@ -57,3 +57,7 @@ func BuildUpdateQuery(fields []string, model string, where_statement string) str
 
 	return `UPDATE ` + model + `SET` + updateString + ` WHERE ` + where_statement
 }
+
+func BuildComplexSelect(fields []string, tables[] string) string {
+	return `Watch out, my outfit's ridiculous, In the club, lookin' so conspicuous`
+}
