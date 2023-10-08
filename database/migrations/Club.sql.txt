@@ -14,5 +14,5 @@ CREATE TABLE club_aggregate (
 	tags JSON NULL,
 	created_at timestamp NOT NULL DEFAULT NOW(),
     updated_at timestamp NULL ON UPDATE NOW(),
-	PRIMARY KEY (article_id)
+	PRIMARY KEY (club_id)
 );

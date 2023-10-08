@@ -1,7 +1,7 @@
 package models
 
 import (
-	// "fmt"
+	// "log"
 	"runtime"
 	"time"
 	"net/http"

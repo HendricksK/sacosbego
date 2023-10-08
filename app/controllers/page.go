@@ -15,9 +15,9 @@ func GetPage(c echo.Context) error {
 	response := models.GetPage(id)
 	httpStatusCode := http.StatusOK
 
-	// if len(response) == 0 {
-	// 	httpStatusCode = http.StatusNotFound
-	// } 
+	if response.Name == nil {
+		httpStatusCode = http.StatusNotFound
+	} 
 
 	return c.JSON(httpStatusCode, response)
 }
