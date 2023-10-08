@@ -1,0 +1,8 @@
+CREATE TABLE page (
+    id int UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    created_at timestamp NOT NULL DEFAULT NOW(),
+    updated_at timestamp NULL ON UPDATE NOW(),
+    PRIMARY KEY (id)
+);
+
