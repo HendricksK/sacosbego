@@ -23,3 +23,4 @@ git submodule update --init --recursive
 git submodule update --init --recursive
 
 ### using an updated version of fresh which is very helpful since watcher is now giving errors and I am a bit too lazy to figure out why https://github.com/zzwx/fresh
+### fresh -g to generate new yml config file -> fresh to start 
