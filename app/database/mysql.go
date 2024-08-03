@@ -16,7 +16,6 @@ var db_host = "127.0.0.1:3306";
 func Open() *sql.DB {
 	// parseTime=true https://github.com/go-sql-driver/mysql#timetime-support
 	database, err := sql.Open("mysql", "dev-sacos:riuc6Y5Rend$W5%BSG*S$@tcp(" + db_host + ")/sacos_dev?parseTime=true")
-	// id:password@tcp(your-amazonaws-uri.com:3306)/dbname
 	if err != nil {
 		panic(err)
 		

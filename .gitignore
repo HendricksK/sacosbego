@@ -3,3 +3,5 @@ vendor/*
 tmp/*
 db-data/postgres/*
 main
+database/local/*
+database/prod/*
