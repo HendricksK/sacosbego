@@ -6,7 +6,7 @@ services:
     go:
         build:
             dockerfile: ./deployment/local/go/go.dockerfile
-        container_name: sacosbego
+        container_name: sacosbe-go
         volumes:
             # - './app:/app'
             - './build:/app'
@@ -21,6 +21,7 @@ services:
     nginx:
         build: 
             dockerfile: ./deployment/local/nginx/nginx.dockerfile
+        container_name: sacosbe-nginx
         ports:
             - 8484:80
         links:
@@ -36,6 +37,7 @@ services:
     sqlite:
         build:
             dockerfile: ./deployment/local/sqlite/sqlite.dockerfile
+        container_name: sacosbe-sqlite
         stdin_open: true
         tty: true
         ports:

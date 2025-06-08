@@ -1,0 +1,56 @@
+version: '3.8'
+
+# Services
+services:
+    # Go Service
+    go:
+        build:
+            dockerfile: ./deployment/local/go/go.dockerfile
+        container_name: sacosbe-go
+        volumes:
+            - './build:/app'
+        ports:
+            - 9000:9000
+        networks: 
+            - backend    
+        depends_on:
+            - sqlite
+
+    # Nginx Service
+    nginx:
+        build: 
+            dockerfile: ./deployment/local/nginx/nginx.dockerfile
+        container_name: sacosbe-nginx
+        ports:
+            - 8484:80
+        links:
+            - 'go'
+        volumes:
+            - './deployment/local/nginx/conf.d:/etc/nginx/conf.d'
+            - './logs/nginx/:/var/log/nginx'
+            # - './build:/var/www/html'
+        networks: 
+            - backend        
+        depends_on:
+            - go
+    # Sqlite Service
+    sqlite:
+        build:
+            dockerfile: ./deployment/local/sqlite/sqlite.dockerfile
+        container_name: sacosbe-sqlite
+        stdin_open: true
+        tty: true
+        ports:
+            - 3366:3306
+        volumes:
+            - ./database:/database
+        networks: 
+            - backend
+
+networks:
+    backend:
+        driver: bridge    
+
+    
+
+
