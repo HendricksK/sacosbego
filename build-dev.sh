@@ -1,3 +1,4 @@
 #!/bin/bash
-go build -o main
-cp main ./build 
+cd app
+go get
+go install

@@ -1,12 +1,14 @@
-FROM golang:latest
+FROM golang:latest 
 
 WORKDIR /app
 
-# COPY . .
+COPY /app/. .
 
-# RUN go mod download
+RUN go get
 
-# RUN go build -o /main
+RUN go install 
+    
+RUN go build -o main 
 
 EXPOSE 9000
 
