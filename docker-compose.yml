@@ -1,20 +1,68 @@
-version: '3'
+version: '3.8'
 
+# Services
 services:
 
-  sacosbe-service:
-    build:
-      context: ./
-      dockerfile: ./sacosbego.dockerfile
-    restart: always
-    ports: 
-      - "9001:80"
-    deploy:
-      mode: replicated
-      replicas: 1
-    environment:
-      PORT: 80
-      DATABASE_URL: "postgres://sacosapi:password@0.0.0.0:5432/sacos?sslmode=disable"
+    # Go Service
+    go:
+        build:
+            dockerfile: ./deployment/local/go/go.dockerfile
+        depends_on:
+            - sqlite
+
+    # Nginx Service
+    nginx:
+        image: nginx:latest
+        ports:
+            - 83:80
+        links:
+            - 'go'
+        volumes:
+            - './build:/var/www/html'
+            - './deployment/local/nginx/conf.d:/etc/nginx/conf.d'
+        depends_on:
+            - sqlite
+    sqlite:
+      image: keinos/sqlite3:latest
+      ports:
+          - 3366:3306
+      volumes:
+          - sqlitedata:/sqlite/data
+
+# Volumes
+volumes:
+  sqlitedata:
+
+# version: '3.8'
+
+# services:
+
+#   sacosbe-service:
+#     build:
+#       context: ./
+#       dockerfile: ./sacosbego.dockerfile
+#     restart: always
+#     ports: 
+#       - "9001:80"
+#     deploy:
+#       mode: replicated
+#       replicas: 1
+#     environment:
+#       PORT: 80
+#       DATABASE_URL: "file:sacos.db?cache=shared&mode=memory"
+  
+#   sqlite-service:
+#       build:
+#         context: ./
+#         dockerfile: ./sqlite/sqlite.dockerfile
+#       restart: always
+#       ports: 
+#         - "3366:3306"
+#   deploy:
+#       mode: replicated
+#       replicas: 2
+#   environment:
+#       PORT: 3306
 
   # logger-service:
   #   build:
@@ -38,19 +86,19 @@ services:
   #   environment:
   #     DSN: "host=postgres port=5432 user=postgres password=password dbname=users sslmode=disable timezone=UTC connect_timeout=5"
   
-  postgres:
-    image: 'postgres:14.2' 
-    ports:
-      - "5432:5432"
-    deploy:
-      mode: replicated
-      replicas: 1
-    environment:
-      POSTGRES_USER: sacosapi
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: sacos
-    volumes:
-      - ./db-data/postgres/:/var/lib/postgresql/data/
+  # postgres:
+  #  image: 'postgres:14.2' 
+  #  ports:
+  #    - "5432:5432"
+  #  deploy:
+  #    mode: replicated
+  #    replicas: 1
+  #  environment:
+  #    POSTGRES_USER: sacosapi
+  #    POSTGRES_PASSWORD: password
+  #    POSTGRES_DB: sacos
+  #  volumes:
+  #    - ./db-data/postgres/:/var/lib/postgresql/data/
 
   # mongo:
   #   image: 'mongo:4.2.16-bionic'
