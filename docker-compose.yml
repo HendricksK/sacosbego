@@ -36,6 +36,8 @@ services:
     sqlite:
         build:
             dockerfile: ./deployment/local/sqlite/sqlite.dockerfile
+        stdin_open: true
+        tty: true
         ports:
             - 3366:3306
         volumes:
