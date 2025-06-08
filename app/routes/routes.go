@@ -1,9 +1,10 @@
 package routes
 
 import (
+	"net/http"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"net/http"
 
 	controllers "github.com/HendricksK/sacosbego/app/controllers"
 	// auth "github.com/HendricksK/sacosbego/app/auth"
@@ -14,12 +15,10 @@ func Routes() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://sacos.localhost","http://127.0.0.1:8080"},
+		AllowOrigins: []string{"http://sacos.localhost", "http://127.0.0.1:8080"}, // might not be needed, need to check with the docker install.
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodOptions},
 	}))
-	
 
 	// HEALTH
 	e.GET("/ping", controllers.Ping)
@@ -39,7 +38,7 @@ func Routes() {
 	e.PATCH("/rider", controllers.PatchRider)
 	e.DELETE("/rider", controllers.DeleteRider)
 
-	// IMAGE 
+	// IMAGE
 	e.GET("/image/tags/:tags", controllers.GetImagesViaTag)
 	e.GET("/image/entity/:entity", controllers.GetImagesViaEntity)
 	e.POST("/image", controllers.CreateImage)
@@ -48,5 +47,5 @@ func Routes() {
 	e.GET("page/:id", controllers.GetPage)
 
 	// need to get port from os here.
-	e.Logger.Fatal(e.Start("localhost:9000"))
+	e.Logger.Fatal(e.Start(":9000"))
 }

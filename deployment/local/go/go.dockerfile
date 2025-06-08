@@ -1,7 +1,11 @@
 FROM golang:latest
 
-RUN mkdir $GOPATH/go-web
+WORKDIR /
 
-# RUN service goweb start
+# RUN go mod download
 
-# RUN service goweb status 
+RUN go build -o /app/main
+
+EXPOSE 9000
+
+CMD ["/app/main"]
