@@ -48,5 +48,5 @@ func Routes() {
 	e.GET("page/:id", controllers.GetPage)
 
 	// need to get port from os here.
-	e.Logger.Fatal(e.Start("localhost:9002"))
+	e.Logger.Fatal(e.Start("localhost:9000"))
 }
