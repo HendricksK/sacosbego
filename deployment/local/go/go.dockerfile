@@ -1,15 +1,18 @@
 FROM golang:latest 
 
+RUN apt update -y && apt install supervisor -y
+
+RUN mkdir -p /var/log/supervisor
+
 WORKDIR /app
 
 COPY /app/. .
 
-RUN go get
-
-RUN go install 
-    
-RUN go build -o main 
+COPY /proc/. /etc/supervisor/conf.d/
 
 EXPOSE 9000
 
-CMD ["/app/main"]
+# CMD ["/usr/bin/supervisord"]
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+
