@@ -18,6 +18,16 @@ services:
             - backend    
         # depends_on:
         #     - sqlite
+        # command: go run main.go
+        # need to reload supervisor after rebuild WIPPPPPPPPPPPP 
+        develop:
+            watch:
+                - action: sync+restart
+                  path: ./app
+                  target: ./build
+                    # - path: ./app
+                    # - target: ./app
+
 
     # Nginx Service
     nginx:
@@ -51,7 +61,8 @@ services:
 
 networks:
     backend:
-        driver: bridge    
+        driver: bridge   
+         
 
     
 
