@@ -16,19 +16,6 @@ services:
             - 9000:9000
         networks: 
             - backend    
-        # depends_on:
-        #     - sqlite
-        # command: go run main.go
-        # need to reload supervisor after rebuild WIPPPPPPPPPPPP 
-        develop:
-            watch:
-                - action: sync+restart
-                  path: ./app
-                  target: ./build
-                    # - path: ./app
-                    # - target: ./app
-
-
     # Nginx Service
     nginx:
         build: 
@@ -41,21 +28,26 @@ services:
         volumes:
             - './deployment/local/nginx/conf.d:/etc/nginx/conf.d'
             - './logs/nginx/:/var/log/nginx'
-            # - './build:/var/www/html'
         networks: 
             - backend        
         depends_on:
             - go
-    sqlite:
+    mariadb:
         build:
-            dockerfile: ./deployment/local/sqlite/sqlite.dockerfile
-        container_name: sacosbe-sqlite
+            dockerfile: ./deployment/local/mariadb/mariadb.dockerfile
+        container_name: sacosbe-mariadb
+        restart: always
         stdin_open: true
         tty: true
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: sacos
+            MYSQL_PASSWORD: sacos
+            MYSQL_DATABASE: sacos
         ports:
-            - 3366:3306
+            - 3367:3306
         volumes:
-            - ./database:/database
+            - ./database/mariadb/data:/var/lib/mysql
         networks: 
             - backend
 

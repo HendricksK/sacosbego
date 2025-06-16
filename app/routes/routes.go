@@ -16,7 +16,7 @@ func Routes() {
 	e.Use(middleware.Recover())
 
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://sacos.localhost", "http://127.0.0.1:8080"}, // might not be needed, need to check with the docker install.
+		AllowOrigins: []string{"http://cycling.sacoshistory.local:8080"}, // might not be needed, need to check with the docker install.
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodOptions},
 	}))
 

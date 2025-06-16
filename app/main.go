@@ -10,6 +10,7 @@ func main() {
 	log.Println("Never going to give you up")
 	// log.Println("Never going to let you down, never going to turn around and desert you....")
 	log.Println("Joke Peralta")
+	log.Println("Jakey don't dine on swine...")
 	log.Println("https://www.youtube.com/watch?v=LOZuxwVk7TU")
 
 	routes.Routes()
